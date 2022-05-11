@@ -146,12 +146,48 @@
 									<th>Tổng lương</th>
 									<th>Xếp loại</th>
 									<th><em class="fa fa-cog"></em></th>
-								</tr>
+								</tr>	
 							</thead>
 							<tbody id="tableDanhSach">
-
+								<tr>
+									<td>1</td>
+									<td>Ngô Tấn Hưng</td>
+									<td>minhtung@gmail.com</td>
+									<td>01/01/2019</td>
+									<td>Sếp</td>
+									<td>10000000 VNĐ</td>
+									<td>Giỏi</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>Thái Thị Kim Hà</td>
+									<td>kimha@gmail.com</td>
+									<td>01/01/2020</td>
+									<td>Trường phòng</td>
+									<td>9000000 VNĐ</td>
+									<td>Khá</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>Lê Thái Gia Hân</td>
+									<td>giahan@gmail.com</td>
+									<td>01/01/2021</td>
+									<td>Nhân viên</td>
+									<td>8000000 VNĐ</td>
+									<td>Trung bình</td>
+								</tr>
+								<tr>
+									<td id="tk"></td>
+									<td id="ten"></td>
+									<td id="mail"></td>
+									<td id="ngayThangNam"></td>
+									<td id="viTri"></td>
+									<td id="mucLuong"></td>
+									<td id="loai"></td>
+								</tr>
 							</tbody>
 						</table>
+						<button id="btnInDS" type="button" class="btn btn-success">In danh sách nhân viên</button>
 					</div>
 
 					<!-- Footer -->
@@ -186,9 +222,7 @@
 
 				<!-- Modal body -->
 				<div class="modal-body">
-
 					<form role="form">
-
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">
@@ -197,10 +231,8 @@
 								<input type="text" name="tk" id="tknv" class="form-control input-sm"
 									placeholder="Tài khoản">
 							</div>
-
 							<span class="sp-thongbao" id="tbTKNV"></span>
 						</div>
-
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">
@@ -211,7 +243,6 @@
 							</div>
 							<span class="sp-thongbao" id="tbTen"></span>
 						</div>
-
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">
@@ -220,10 +251,8 @@
 								<input type="email" name="email" id="email" class="form-control input-sm"
 									placeholder="Email">
 							</div>
-
 							<span class="sp-thongbao" id="tbEmail"></span>
 						</div>
-
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">
@@ -234,7 +263,6 @@
 							</div>
 							<span class="sp-thongbao" id="tbMatKhau"></span>
 						</div>
-
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">
@@ -243,10 +271,8 @@
 								<input type="text" name="ngaylam" id="datepicker" class="form-control"
 									placeholder="Ngày làm">
 							</div>
-
 							<span class="sp-thongbao" id="tbNgay"></span>
 						</div>
-						
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">
@@ -289,7 +315,8 @@
 				<!-- Modal footer -->
 				<div class="modal-footer" id="modal-footer">
 					<button id="btnThemNV" type="button" class="btn btn-success">Thêm người dùng</button>
-					<button id="btnCapNhat" type="button" class="btn btn-success">Cập nhật</button>
+					<button id="btnCapNhat" type="button" class="btn btn-success" onclick="return KiemTraHopLy()">Cập nhật</button>
+					<button type="button" class="btn btn-info" onclick="HienThiThongTin()">Hiển thị TT</button>
 					<button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
 				</div>
 
@@ -324,6 +351,7 @@
 			});
 		});
 	</script>
+	<script src="./js/main.js"></script>
 </body>
 
 </html>
