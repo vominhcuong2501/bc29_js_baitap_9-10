@@ -211,121 +211,39 @@ function HienThiThongTin() {
 /**
  * Câu 4: Validation
  */ 
-    var _taiKhoan = getEle("tknv").value;
-    var _hoTen = getEle("name").value;
-    var _email = getEle("email").value;
-    var _matKhau = getEle("password").value;
-    var _ngayLam = getEle("datepicker").value;
-    var _chucVu = getEle("chucvu").value;
-    var _luongCB = getEle("luongCB").value*1;
-    var _gioLam = getEle("gioLam").value*1;
+var chuoiTB = ["Vui lòng nhập thông tin",
+            "Vui lòng nhập lương từ 1.000.000 đến 20.000.000 VNĐ",
+            "Vui lòng nhập số giờ làm từ 80 đến 200",
+            "Vui lòng nhập số",
+            "Vui lòng nhập bằng chữ",
+            "Vui lòng nhập đúng (Ví dụ: cuongvo@gmail.com)",
+            "Vui lòng nhập mật khẩu chứa ít nhất một chữ viết Hoa, số và ký tự đặc biệt",
+            "Vui lòng nhập ngày theo dạng tháng/ngày/năm (mm/dd/yyyy)"] 
 
-function KiemTraDoDaiTaiKhoan(idText,minlength,maxlength) {
+var text = /^[a-zA-z]+$/; 
+var email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+var password =  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+var date = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/; 
+
+function KiemTraDoDaiTaiKhoan(minlength,maxlength) {
     var _taiKhoan = getEle("tknv").value;
-    var number = /^(?=.*[0-9]).*$/;
     var tbTK = getEle("tbTKNV");
+    var text = /^[a-zA-z]+$/;
     if(_taiKhoan == "") {
         tbTK.style.display = "block";
-        tbTK.innerHTML = "Vui lòng nhập tài khoản";
+        tbTK.innerHTML = "Vui lòng nhập thông tin";
+        return false;
+    } else if(_taiKhoan.match(text)) {
+        tbTK.style.display = "block";
+        tbTK.innerHTML = "Vui lòng chỉ nhập số";
         return false;
     } else if(_taiKhoan.length < minlength || maxlength < _taiKhoan.length) {
         tbTK.style.display = "block";
         tbTK.innerHTML = "Bạn vui lòng nhập từ " + minlength + " đến " + maxlength + " ký số.";
         return false;
     } else {
-        tbTK.style.display = "block";
-        tbTK.innerHTML = "Vui lòng chỉ nhập số";
-        return false;
-    }
-}
-
-function KiemTraTenNV(idtag) {
-    var _hoTen = getEle("name").value;
-    var tbTen = getEle("tbTen");
-    var text = /^[a-zA-z]+$/; 
-    if(_hoTen === "") {
-        tbTen.style.display = "block";
-        tbTen.innerHTML = "Vui lòng nhập tên";
-        return false;
-    } else if(_hoTen.match(text)) {
-        tbTen.style.display = "none";
+        tbTK.style.display = "none";
         return true;
-    } else {
-        tbTen.style.display = "block";
-        tbTen.innerHTML = "Vui lòng nhập bằng chữ";
-        return false;
-    }
-}
-
-function KiemTraEmail(email) {
-    var _email = getEle("email").value;
-    var tbEmail = getEle("tbEmail");
-    var email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if(_email === "") {
-        tbEmail.style.display = "block";
-        tbEmail.innerHTML = "Vui lòng nhập email";
-        return false;
-    } else if(_email.match(email)) {
-        tbEmail.style.display = "none";
-        return true;
-    } else {
-        tbEmail.style.display = "block";
-        tbEmail.innerHTML = "Vui lòng nhập đúng (Ví dụ: cuongvo@gmail.com)";
-        return false;
-    }
-}
-
-function KiemTraMatKhau(idPassword) {
-    var check =  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
-    var _matKhau = getEle("password").value;
-    var tbMatKhau = getEle("tbMatKhau");
-    if(_matKhau === "") {
-        tbMatKhau.style.display = "block";
-        tbMatKhau.innerHTML = "Vui lòng nhập mật khẩu";
-        return false;
-    } else if(_matKhau.match(check)) {
-        tbMatKhau.style.display = "none";
-        return true;
-    } else {
-        tbMatKhau.style.display = "block";
-        tbMatKhau.innerHTML = "Vui lòng nhập mật khẩu chứa ít nhất một chữ viết Hoa, số và ký tự đặc biệt";
-        return false;
-    }
-}
-
-function KiemTraNgay(day) {
-    var _ngayLam = getEle("datepicker").value;
-    var ngay = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/; 
-    var tbNgay = getEle("tbNgay");
-    if(_ngayLam === "") {
-        tbNgay.style.display = "block";
-        tbNgay.innerHTML = "Vui lòng nhập ngày theo dạng tháng/ngày/năm (mm/dd/yyyy)";
-        return false;
-    } else if(_ngayLam.match(ngay)) {
-        tbNgay.style.display = "none";
-        return true;
-    } else {
-        tbNgay.style.display = "block";
-        tbNgay.innerHTML = "Vui lòng nhập ngày theo dạng tháng/ngày/năm (mm/dd/yyyy)";
-        return false;
-    }
-}
-
-function KiemTraLuongCB(luongCB,min,max) {
-    var _luongCB = getEle("luongCB").value*1;
-    var tbLuongCB = getEle("tbLuongCB");
-    if(_luongCB =="") {
-        tbLuongCB.style.display = "block";
-        tbLuongCB.innerHTML = "Vui lòng nhập lương";
-        return false;
-    } else if(_luongCB < min || _luongCB > max) {
-        tbLuongCB.style.display = "block";
-        tbLuongCB.innerHTML = "Vui lòng nhập lương từ "+ min + " đến "+ max + " VNĐ";
-        return false;
-    } else {
-        tbLuongCB.style.display = "block";
-        tbLuongCB.innerHTML = "Vui lòng nhập số";
-        return false;
     }
 }
 
@@ -342,28 +260,55 @@ function KiemTraChucVu() {
     }
 }
 
-function KiemTraGioLam(gioLam,min,max) {
-    var _gioLam = getEle("gioLam").value*1;
-    var tbGiolam = getEle("tbGiolam");
-    if(_gioLam == "") {
-        tbGiolam.style.display = "block";
-        tbGiolam.innerHTML = "Vui lòng nhập giờ làm";
+function KiemTraNhap(idField,min,max,idTB,TB1,TB2,TB3) {
+    var valueField = getEle(idField).value;
+    var mangTB = getEle(idTB);
+    if(valueField === "") {
+        mangTB.style.display = "block";
+        mangTB.innerHTML = chuoiTB[TB1];
         return false;
-    } else if(_gioLam < min || _gioLam > max) {
-        tbGiolam.style.display = "block";
-        tbGiolam.innerHTML = "Vui lòng nhập số giờ làm từ "+ min + " đến "+ max;
+    } else if(valueField.match(text)) {
+        mangTB.style.display = "block";
+        mangTB.innerHTML = chuoiTB[TB3];
+        return false;
+    } else if(valueField < min || valueField > max) {
+        mangTB.style.display = "block";
+        mangTB.innerHTML = chuoiTB[TB2];
         return false;
     } else {
-        tbGiolam.style.display = "block";
-        tbGiolam.innerHTML = "Vui lòng nhập số";
-        return false;
+        mangTB.style.display = "none";
+        return true;
     }
 }
 
-function KiemTraHopLy() {
-    return KiemTraDoDaiTaiKhoan("tknv",8,16) + KiemTraTenNV("name") + KiemTraEmail("email") + KiemTraMatKhau(password) + KiemTraNgay("datepicker") + KiemTraLuongCB("luongCB",1000000,20000000) + KiemTraChucVu("chucvu") + KiemTraGioLam("gioLam",80,200);
+function KiemTraKieu(idField,idCheck,idTB,TB1,TB2) {
+    var valueField = getEle(idField).value;
+    var mangTB = getEle(idTB);
+    if(valueField === "") {
+            mangTB.style.display = "block";
+            mangTB.innerHTML = chuoiTB[TB1];
+            return false;
+        } else if(!valueField.match(idCheck)) {
+            mangTB.style.display = "block";
+            mangTB.innerHTML = chuoiTB[TB2];
+            return false;
+        } else {
+            mangTB.style.display = "none";
+            return true;
+            
+            }
+
 }
 
-
+function KiemTraHopLy() {
+    KiemTraDoDaiTaiKhoan(8,16) + 
+    KiemTraNhap("luongCB",1000000,20000000,"tbLuongCB",0,1,3) + 
+    KiemTraNhap("gioLam",80,200,"tbGiolam",0,2,3) + 
+    KiemTraChucVu("chucvu") + 
+    KiemTraKieu("name",text,"tbTen",0,4) +
+    KiemTraKieu("email",email,"tbEmail",0,5) +
+    KiemTraKieu("password",password,"tbMatKhau",0,6) +
+    KiemTraKieu("datepicker",date,"tbNgay",0,7);
+}
 
 
