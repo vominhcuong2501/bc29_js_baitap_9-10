@@ -224,13 +224,10 @@ function KiemTraDoDaiTaiKhoan(idText,minlength,maxlength) {
     var _taiKhoan = getEle("tknv").value;
     var number = /^(?=.*[0-9]).*$/;
     var tbTK = getEle("tbTKNV");
-    if(_taiKhoan === "") {
+    if(_taiKhoan == "") {
         tbTK.style.display = "block";
         tbTK.innerHTML = "Vui lòng nhập tài khoản";
         return false;
-    } else if(_taiKhoan.match(number)) {
-        tbTK.style.display = "none";
-        return true;
     } else if(_taiKhoan.length < minlength || maxlength < _taiKhoan.length) {
         tbTK.style.display = "block";
         tbTK.innerHTML = "Bạn vui lòng nhập từ " + minlength + " đến " + maxlength + " ký số.";
@@ -316,15 +313,11 @@ function KiemTraNgay(day) {
 
 function KiemTraLuongCB(luongCB,min,max) {
     var _luongCB = getEle("luongCB").value*1;
-    var number = /^(?=.*[0-9]).*$/;
     var tbLuongCB = getEle("tbLuongCB");
-    if(_luongCB = "") {
+    if(_luongCB =="") {
         tbLuongCB.style.display = "block";
         tbLuongCB.innerHTML = "Vui lòng nhập lương";
         return false;
-    } else if(_luongCB.match(number)) {
-        tbLuongCB.style.display = "none";
-        return true;
     } else if(_luongCB < min || _luongCB > max) {
         tbLuongCB.style.display = "block";
         tbLuongCB.innerHTML = "Vui lòng nhập lương từ "+ min + " đến "+ max + " VNĐ";
@@ -351,20 +344,16 @@ function KiemTraChucVu() {
 
 function KiemTraGioLam(gioLam,min,max) {
     var _gioLam = getEle("gioLam").value*1;
-    var number = /^(?=.*[0-9]).*$/;
     var tbGiolam = getEle("tbGiolam");
-    if(_gioLam = "") {
+    if(_gioLam == "") {
         tbGiolam.style.display = "block";
         tbGiolam.innerHTML = "Vui lòng nhập giờ làm";
         return false;
-    } else if(_gioLam.match(number)) {
-        tbGiolam.style.display = "none";
-        return true;
     } else if(_gioLam < min || _gioLam > max) {
         tbGiolam.style.display = "block";
-        tbGiolam.innerHTML = "Vui lòng nhập giờ làm từ "+ min + " đến "+ max;
+        tbGiolam.innerHTML = "Vui lòng nhập số giờ làm từ "+ min + " đến "+ max;
         return false;
-    } else  {
+    } else {
         tbGiolam.style.display = "block";
         tbGiolam.innerHTML = "Vui lòng nhập số";
         return false;
