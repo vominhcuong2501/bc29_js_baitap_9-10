@@ -224,29 +224,30 @@ var text = /^[a-zA-z]+$/;
 var email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 var password =  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
 var date = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/; 
-var number = /^(?=.*[0-9]).*$/;
+var number = /^[0-9]+$/;
 
 function KiemTraDoDaiTaiKhoan(minlength,maxlength) {
     var _taiKhoan = getEle("tknv").value;
     var tbTK = getEle("tbTKNV");
-    var text = /^[a-zA-z]+$/;
-    var number = /^(?=.*[0-9]).*$/;
-    if(_taiKhoan == "") {
+    var number = /^[0-9]+$/;
+    if(_taiKhoan === "") {
         tbTK.style.display = "block";
         tbTK.innerHTML = "Vui lòng nhập thông tin";
         return false;
-    } else if(_taiKhoan.match(text) || _taiKhoan.match(number) ) {
+    } else if(!_taiKhoan.match(number)) {
         tbTK.style.display = "block";
         tbTK.innerHTML = "Vui lòng chỉ nhập số";
         return false;
-    } else if(_taiKhoan.length < minlength || maxlength < _taiKhoan.length) {
-        tbTK.style.display = "block";
-        tbTK.innerHTML = "Bạn vui lòng nhập từ " + minlength + " đến " + maxlength + " ký số.";
-        return false;
-    } else {
-        tbTK.style.display = "none";
-        return true;
-    }
+    } else if(_taiKhoan.match(number)) {
+        if(_taiKhoan.length < minlength || maxlength < _taiKhoan.length) {
+            tbTK.style.display = "block";
+            tbTK.innerHTML = "Bạn vui lòng nhập từ " + minlength + " đến " + maxlength + " ký số.";
+            return false;
+        } else {
+            tbTK.style.display = "none";
+            return true;
+        }
+    } 
 }
 
 function KiemTraChucVu() {
@@ -269,7 +270,7 @@ function KiemTraNhap(idField,min,max,idTB,TB1,TB2,TB3) {
         mangTB.style.display = "block";
         mangTB.innerHTML = chuoiTB[TB1];
         return false;
-    } else if(valueField.match(text) || valueField.match(number)) {
+    } else if(!valueField.match(number)) {
         mangTB.style.display = "block";
         mangTB.innerHTML = chuoiTB[TB3];
         return false;
