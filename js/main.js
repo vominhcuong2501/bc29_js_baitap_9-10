@@ -13,7 +13,9 @@ getEle("btnThem").onclick = function() {
     getEle("btnThemNV").style.display = "block";
     getEle("btnCapNhat").style.display = "none";
 }
-
+getEle("btnDong").onclick = function() {
+    reset();
+}
 /**
  * đặt reset
  */
