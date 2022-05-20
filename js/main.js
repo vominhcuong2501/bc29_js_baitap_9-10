@@ -72,16 +72,15 @@ getEle("btnThemNV").onclick = function() {
     var password =  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
     var date = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/; 
  
-    var isValid = validation.kiemTraDoDaiTaiKhoan(8,16);
-    var isValid = validation.kiemTraNhap("luongCB",1000000,20000000,"tbLuongCB",0,1,3);
-    var isValid = validation.kiemTraNhap("gioLam",80,200,"tbGiolam",0,2,3);
-    var isValid = validation.kiemTraChucVu("chucvu");
-    var isValid = validation.kiemTraKieu("name",text,"tbTen",0,4);
-    var isValid = validation.kiemTraKieu("email",email,"tbEmail",0,5);
-    var isValid = validation.kiemTraKieu("password",password,"tbMatKhau",0,6);
-    var isValid = validation.kiemTraKieu("datepicker",date,"tbNgay",0,7);
+    isValid &= validation.kiemTraDoDaiTaiKhoan(8,16);
+    isValid &= validation.kiemTraKieu("name",text,"tbTen",0,4);
+    isValid &= validation.kiemTraKieu("email",email,"tbEmail",0,5);
+    isValid &= validation.kiemTraKieu("password",password,"tbMatKhau",0,6);
+    isValid &= validation.kiemTraKieu("datepicker",date,"tbNgay",0,7);
+    isValid &= validation.kiemTraChucVu();
+    isValid &= validation.kiemTraNhap("luongCB",1000000,20000000,"tbLuongCB",0,1,3);
+    isValid &= validation.kiemTraNhap("gioLam",80,200,"tbGiolam",0,2,3);
     
-   
     // check isValid
     if(!isValid) return;
     

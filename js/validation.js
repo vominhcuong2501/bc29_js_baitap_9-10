@@ -43,13 +43,13 @@ this.kiemTraDoDaiTaiKhoan = function(minlength,maxlength) {
 this.kiemTraChucVu = function() {
     var _chucVu = getEle("chucvu");
     var tbChucVu = getEle("tbChucVu");
-    if(_chucVu.selectedIndex === 0) {
+    if(_chucVu.selectedIndex !== 0) {
+        tbChucVu.style.display = "none";
+        return true;
+    } else {
         tbChucVu.style.display = "block";
         tbChucVu.innerHTML = "Vui lòng chọn chức vụ";
         return false;
-    } else {
-        tbChucVu.style.display = "none";
-        return true;
     }
 }
 
