@@ -5,103 +5,99 @@ function Validation() {
     /**
  * đặt mảng validation
  */
- var chuoiTB = ["Vui lòng nhập thông tin",
- "Vui lòng nhập lương từ 1.000.000 đến 20.000.000 VNĐ",
- "Vui lòng nhập số giờ làm từ 80 đến 200",
- "Vui lòng nhập số",
- "Vui lòng nhập bằng chữ",
- "Vui lòng nhập đúng (Ví dụ: cuongvo@gmail.com)",
- "Vui lòng nhập mật khẩu chứa ít nhất một chữ viết Hoa, số và ký tự đặc biệt",
- "Vui lòng nhập ngày theo dạng tháng/ngày/năm (mm/dd/yyyy)"] 
+ var chuoiTB = ["*Vui lòng nhập thông tin",
+ "*Vui lòng nhập lương từ 1.000.000 đến 20.000.000 VNĐ",
+ "*Vui lòng nhập số giờ làm từ 80 đến 200",
+ "*Vui lòng nhập số",
+ "*Vui lòng nhập bằng chữ",
+ "*Vui lòng nhập từ 8 đến 16 ký tự",
+ "*Vui lòng nhập đúng (Ví dụ: cuongvo@gmail.com)",
+ "*Nhập mật khẩu chứa ít nhất một chữ viết Hoa, số và ký tự đặc biệt (ví dụ: Cuong@96)",
+ "*Vui lòng nhập ngày theo dạng tháng/ngày/năm (mm/dd/yyyy)",
+ "*Mã nhân viên đã tồn tại",
+ "*Vui lòng chọn chức vụ"];
 
-
-
-
-this.kiemTraDoDaiTaiKhoan = function(minlength,maxlength) {
-    var _taiKhoan = getEle("tknv").value;
-    var tbTK = getEle("tbTKNV");
-    var number = /^[0-9]+$/;
-    if(_taiKhoan === "") {
-        tbTK.style.display = "block";
-        tbTK.innerHTML = "Vui lòng nhập thông tin";
+this.kiemTraDoDaiTaiKhoan = function(value,minlength,maxlength,idCheck,errorID,mess1,mess2,mess3) {
+    if(value === "") {
+        getEle(errorID).style.display = "block";
+        getEle(errorID).innerHTML = chuoiTB[mess1];
         return false;
-    } else if(!_taiKhoan.match(number)) {
-        tbTK.style.display = "block";
-        tbTK.innerHTML = "Vui lòng chỉ nhập số";
+    } else if(!value.match(idCheck)) {
+        getEle(errorID).style.display = "block";
+        getEle(errorID).innerHTML = chuoiTB[mess2];
         return false;
-    } else if(_taiKhoan.match(number)) {
-            if(_taiKhoan.length < minlength || maxlength < _taiKhoan.length) {
-                tbTK.style.display = "block";
-                tbTK.innerHTML = "Bạn vui lòng nhập từ " + minlength + " đến " + maxlength + " ký số.";
+    } else if(value.match(idCheck)) {
+            if(value.trim().length < minlength || maxlength < value.trim().length) {
+                getEle(errorID).style.display = "block";
+                getEle(errorID).innerHTML = chuoiTB[mess3];
                 return false;
             } else {
-                tbTK.style.display = "none";
+                getEle(errorID).style.display = "none";
                 return true;
             }
     } 
 }
-this.kiemTraChucVu = function() {
-    var _chucVu = getEle("chucvu");
-    var tbChucVu = getEle("tbChucVu");
-    if(_chucVu.selectedIndex !== 0) {
-        tbChucVu.style.display = "none";
+this.kiemTraChucVu = function(value,errorID,mess1) {
+    if(getEle(value).selectedIndex !== 0) {
+        getEle(errorID).style.display = "none";
         return true;
     } else {
-        tbChucVu.style.display = "block";
-        tbChucVu.innerHTML = "Vui lòng chọn chức vụ";
+        getEle(errorID).style.display = "block";
+        getEle(errorID).innerHTML = chuoiTB[mess1];
         return false;
     }
 }
 
-this.kiemTraNhap = function(idField,min,max,idTB,TB1,TB2,TB3) {
-    var valueField = getEle(idField).value;
-    var mangTB = getEle(idTB);
-    if(valueField === "") {
-        mangTB.style.display = "block";
-        mangTB.innerHTML = chuoiTB[TB1];
+this.kiemTraNhap = function(idField,min,max,idCheck,errorID,mess1,mess2,mess3) {
+    var idField = getEle(idField).value;
+    if(idField === "") {
+        getEle(errorID).style.display = "block";
+        getEle(errorID).innerHTML = chuoiTB[mess1];
         return false;
-    } else if(!valueField.match(number)) {
-        mangTB.style.display = "block";
-        mangTB.innerHTML = chuoiTB[TB3];
+    } else if(!idField.match(idCheck)) {
+        getEle(errorID).style.display = "block";
+        getEle(errorID).innerHTML = chuoiTB[mess2];
         return false;
-    } else if(valueField < min || valueField > max) {
-        mangTB.style.display = "block";
-        mangTB.innerHTML = chuoiTB[TB2];
+    } else if(idField < min || idField > max) {
+        getEle(errorID).style.display = "block";
+        getEle(errorID).innerHTML = chuoiTB[mess3];
         return false;
     } else {
-        mangTB.style.display = "none";
+        getEle(errorID).style.display = "none";
         return true;
     }
 }
 
-this.kiemTraKieu = function(idField,idCheck,idTB,TB1,TB2) {
-    var valueField = getEle(idField).value;
-    var mangTB = getEle(idTB);
-    if(valueField === "") {
-        mangTB.style.display = "block";
-        mangTB.innerHTML = chuoiTB[TB1];
+this.kiemTraKieu = function(value,idCheck,errorID,mess1,mess2) {
+    if(value === "") {
+        getEle(errorID).style.display = "block";
+        getEle(errorID).innerHTML = chuoiTB[mess1];
         return false;
-    } else if(!valueField.match(idCheck)) {
-        mangTB.style.display = "block";
-        mangTB.innerHTML = chuoiTB[TB2];
+    } else if(!value.match(idCheck)) {
+        getEle(errorID).style.display = "block";
+        getEle(errorID).innerHTML = chuoiTB[mess2];
         return false;
     } else {
-        mangTB.style.display = "none";
+        getEle(errorID).style.display = "none";
         return true;
     }
-
 }
 
-// this.kiemTraHopLy = function() {
-//             kiemTraDoDaiTaiKhoan(8,16) + 
-//             kiemTraNhap("luongCB",1000000,20000000,"tbLuongCB",0,1,3) + 
-//             kiemTraNhap("gioLam",80,200,"tbGiolam",0,2,3) + 
-//             kiemTraChucVu("chucvu") + 
-//             kiemTraKieu("name",text,"tbTen",0,4) +
-//             kiemTraKieu("email",email,"tbEmail",0,5) +
-//             kiemTraKieu("password",password,"tbMatKhau",0,6) +
-//             kiemTraKieu("datepicker",date,"tbNgay",0,7);
-// }
-
+this.kiemTraMaNV = function(value,errorID,mess1,arr) {
+    var isStatus = true;
+    arr.forEach(function(item) {
+        if(item.taiKhoan === value) {
+            isStatus = false;
+        }
+    });
+    if(isStatus) {
+            getEle(errorID).style.display = "none";
+            getEle(errorID).innerHTML = "";
+            return true;
+        }
+            getEle(errorID).style.display = "block";
+            getEle(errorID).innerHTML =  chuoiTB[mess1];
+            return false;
+    };
 }
  

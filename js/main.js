@@ -13,9 +13,6 @@ getEle("btnThem").onclick = function() {
     getEle("btnThemNV").style.display = "block";
     getEle("btnCapNhat").style.display = "none";
 }
-getEle("btnDong").onclick = function() {
-    reset();
-}
 /**
  * đặt reset
  */
@@ -33,15 +30,38 @@ function reset() {
 /**
  * Lấy thông tin từ form
  */
-function layThongTinNV() {
+function layThongTinNV(isAdd) {
     var _taiKhoan = getEle("tknv").value;
     var _hoTen = getEle("name").value;
     var _email = getEle("email").value;
     var _matKhau = getEle("password").value;
     var _ngayLam = getEle("datepicker").value;
     var _chucVu = getEle("chucvu").value;
-    var _luongCB = getEle("luongCB").value;
-    var _gioLam = getEle("gioLam").value;
+    var _luongCB = getEle("luongCB").value*1;
+    var _gioLam = getEle("gioLam").value*1;
+
+     // flag (cờ) isValid true: hợp lệ / false: không hợp lệ
+     var isValid = true;
+
+     // Check validation
+     var text = /^[a-zA-z]+$/; 
+     var email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+     var password =  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+     var date = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/; 
+     var number = /^[0-9]+$/;
+    if(isAdd) {
+        isValid &= validation.kiemTraDoDaiTaiKhoan(_taiKhoan,8,16,number,"tbTKNV",0,3,5) && validation.kiemTraMaNV(_taiKhoan,"tbTKNV",9,dsnv.arr);
+    }
+     isValid &= validation.kiemTraKieu(_hoTen,text,"tbTen",0,4);
+     isValid &= validation.kiemTraKieu(_email,email,"tbEmail",0,6);
+     isValid &= validation.kiemTraKieu(_matKhau,password,"tbMatKhau",0,7);
+     isValid &= validation.kiemTraKieu(_ngayLam,date,"tbNgay",0,8);
+     isValid &= validation.kiemTraChucVu("chucvu","tbChucVu",10);
+     isValid &= validation.kiemTraNhap("luongCB",1000000,20000000,number,"tbLuongCB",0,3,1);
+     isValid &= validation.kiemTraNhap("gioLam",80,200,number,"tbGiolam",0,3,2);
+     
+     // check isValid
+     if(!isValid) return;
 
     // tạo đối tượng nhanVien từ lớp đối tượng NhanVien
     var nhanVien = new NhanVien(_taiKhoan, _hoTen, _email, _matKhau, _ngayLam, _chucVu, _luongCB, _gioLam);
@@ -59,34 +79,14 @@ function layThongTinNV() {
  * Câu 2: Thêm nhân viên mới
  */
 getEle("btnThemNV").onclick = function() {
-    var nhanVien = layThongTinNV();
-    // thêm nhân viên
-    dsnv.themNV(nhanVien);
-
-    // flag (cờ) isValid true: hợp lệ / false: không hợp lệ
-    var isValid = true;
-
-    // Check validation
-    var text = /^[a-zA-z]+$/; 
-    var email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    var password =  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
-    var date = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/; 
- 
-    isValid &= validation.kiemTraDoDaiTaiKhoan(8,16);
-    isValid &= validation.kiemTraKieu("name",text,"tbTen",0,4);
-    isValid &= validation.kiemTraKieu("email",email,"tbEmail",0,5);
-    isValid &= validation.kiemTraKieu("password",password,"tbMatKhau",0,6);
-    isValid &= validation.kiemTraKieu("datepicker",date,"tbNgay",0,7);
-    isValid &= validation.kiemTraChucVu();
-    isValid &= validation.kiemTraNhap("luongCB",1000000,20000000,"tbLuongCB",0,1,3);
-    isValid &= validation.kiemTraNhap("gioLam",80,200,"tbGiolam",0,2,3);
-    
-    // check isValid
-    if(!isValid) return;
-    
-    taoBang(dsnv.arr);
-    reset();
-    setLocalStorage();
+    var nhanVien = layThongTinNV(true);
+    if(nhanVien) {
+        // thêm nhân viên
+        dsnv.themNV(nhanVien);    
+        taoBang(dsnv.arr);
+        reset();
+        setLocalStorage();
+    }
 }
 
 /**
@@ -149,10 +149,9 @@ function suaNV(id) {
  * Câu 8: Cập nhật nhân viên
  */
 getEle("btnCapNhat").onclick = function() {
-    var nhanVien = layThongTinNV();
+    var nhanVien = layThongTinNV(false);
     dsnv.capNhat(nhanVien);
     taoBang(dsnv.arr);
-    reset();
     setLocalStorage();
 }
 
